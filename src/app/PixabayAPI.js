@@ -5,6 +5,7 @@ axios.defaults.baseURL = 'https://pixabay.com/api/';
 
 const API_KEY = '36886834-c1a3d356a25a221a99270ff14';
 
+
 export class PixabayAPI {
     #page = 1;
     #per_page = 40;
@@ -25,7 +26,7 @@ export class PixabayAPI {
         const urlAXIOS = `?key=${API_KEY}`;
         // const urlAXIOS = `?key=${API_KEY}&q=${this.#query}&page=${this.#page}&per_page=${this.#per_page}`;
 
-        const { data } = await axios.get(urlAXIOS, { params, });
+        const { data } = await axios.get(urlAXIOS, { params });
         return data;
     }
 
@@ -49,7 +50,8 @@ export class PixabayAPI {
         this.#totalPages = total;
     }
 
-    hasMorePhotos() {
+    hasMorePhotos() {    
         return this.#page < Math.ceil(this.#totalPages / this.#per_page);
     }
+    
 }

@@ -46,14 +46,15 @@ const loadMorePhotos = async function (entries, observer) {
         refs.gallery.insertAdjacentHTML('beforeend', markup);
 
         // const showMore = pixaby.hasMorePhotos();
-        if (pixaby.hasMorePhotos) {
+        if (pixaby.hasMorePhotos()) {
           const lastItem = document.querySelector('.gallery a:last-child');
           observer.observe(lastItem);
-        } else
+        } else {
           Notify.info(
             "We're sorry, but you've reached the end of search results.",
             notifyInit
           );
+        }
 
         modalLightboxGallery.refresh();
         scrollPage();
