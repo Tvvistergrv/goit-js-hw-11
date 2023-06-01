@@ -131,7 +131,7 @@ const onSubmitClick = async event => {
 const onLoadMore = async () => {
   pixaby.incrementPage();
 
-  if (!pixaby.hasMorePhotos) {
+  if (!pixaby.hasMorePhotos()) {
     refs.btnLoadMore.classList.add('is-hidden');
     Notify.info("We're sorry, but you've reached the end of search results.");
     notifyInit;
