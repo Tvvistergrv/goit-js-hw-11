@@ -8,7 +8,7 @@ const API_KEY = '36886834-c1a3d356a25a221a99270ff14';
 
 export class PixabayAPI {
     #page = 1;
-    #per_page = 80;
+    #per_page = 40;
     #query = '';
     #totalPages = 0;
 
