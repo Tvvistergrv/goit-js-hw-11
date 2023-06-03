@@ -73,11 +73,9 @@ const observer = new IntersectionObserver(loadMorePhotos, options);
 const onSubmitClick = async event => {
   event.preventDefault();
 
-  const {
-    elements: { searchQuery },
-  } = event.target;
+  let searchQuery = event.target.elements.searchQuery.value;
 
-  const search_query = searchQuery.value.trim().toLowerCase();
+  const search_query = searchQuery.trim().toLowerCase();
 
   if (!search_query) {
     clearPage();
@@ -93,7 +91,7 @@ const onSubmitClick = async event => {
 
   try {
     spinnerPlay();
-    const { hits, total } = await pixaby.getPhotos();
+    const { hits, totalHits } = await pixaby.getPhotos();
 
     if (hits.length === 0) {
       Notify.failure(
@@ -107,10 +105,10 @@ const onSubmitClick = async event => {
     const markup = createMarkup(hits);
     refs.gallery.insertAdjacentHTML('beforeend', markup);
 
-    pixaby.setTotal(total);
-    Notify.success(`Hooray! We found ${total} images.`, notifyInit);
+    pixaby.setTotal(totalHits);
+    Notify.success(`Hooray! We found ${totalHits} images.`, notifyInit);
 
-    if (pixaby.hasMorePhotos) {
+    if (pixaby.hasMorePhotos()) {
       //refs.btnLoadMore.classList.remove('is-hidden');
 
       const lastItem = document.querySelector('.gallery a:last-child');
@@ -136,6 +134,7 @@ const onLoadMore = async () => {
     Notify.info("We're sorry, but you've reached the end of search results.");
     notifyInit;
   }
+  
   try {
     const { hits } = await pixaby.getPhotos();
     const markup = createMarkup(hits);
@@ -181,6 +180,7 @@ function scrollFunction() {
     refs.btnUpWrapper.style.display = 'none';
   }
 }
+
 refs.btnUp.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
